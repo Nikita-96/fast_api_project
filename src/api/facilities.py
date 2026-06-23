@@ -3,15 +3,18 @@ from fastapi import APIRouter
 from fastapi_cache.decorator import cache
 
 from src.api.dependencies import DBDep
+
 # from src.init import redis_manager
 from src.schema.facilities import FacilitiesAdd
+from src.service.facilities import FacilityService
 
 router = APIRouter(prefix="/facilities", tags=["Удобства номера"])
+
 
 @router.get("", description="Получение всех удобств")
 @cache(expire=30)
 async def get_facilities(db: DBDep):
-    return await db.facilities.get_all()
+    return await FacilityService(db).get_facilities()
 
     # facilities_from_cache = await redis_manager.get("facilities")
     #
@@ -26,8 +29,8 @@ async def get_facilities(db: DBDep):
     #
     # return facilities_dicts
 
+
 @router.post("", description="Добавление удобств")
 async def add_facilities(db: DBDep, data: FacilitiesAdd):
-    facility = await db.facilities.add(data)
-    await db.commit()
-    return {"status":"OK", "data":facility}
+    facility = await FacilityService(db).add_facilities(data=data)
+    return {"status": "OK", "data": facility}

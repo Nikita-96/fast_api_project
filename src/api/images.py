@@ -1,17 +1,11 @@
-import shutil
+from fastapi import APIRouter, UploadFile  # , BackgroundTasks
 
-from fastapi import APIRouter, UploadFile #, BackgroundTasks
+from src.service.images import ImageService
 
-
-from src.tasks.tasks import resize_image
 
 router = APIRouter(prefix="/images", tags=["Изображение отелей"])
 
+
 @router.post("")
 def upload_image(file: UploadFile):
-    image_path = f"src/static/images/{file.filename}"
-    with open(f"src/static/images/{file.filename}", "wb+") as new_file:
-        shutil.copyfileobj(file.file, new_file)
-
-    resize_image.delay(image_path)
-    # background_tasks.add_task(resize_image, image_path)
+    ImageService().upload_image(file=file)

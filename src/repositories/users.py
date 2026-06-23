@@ -6,7 +6,6 @@ from src.models.users import UsersOrm
 from src.repositories.mappers.mappers import UserWithHashDataMapper, UserDataMapper
 
 
-
 class UserRepository(BaseRepository):
     model = UsersOrm
     mapper = UserDataMapper
@@ -18,4 +17,3 @@ class UserRepository(BaseRepository):
         if not res:
             return None
         return UserWithHashDataMapper.map_to_domain_entity(res)
-

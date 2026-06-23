@@ -5,6 +5,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 class Settings(BaseSettings):
     MODE: Literal["TEST", "LOCAL", "DEV", "PROD"]
 
@@ -13,7 +14,6 @@ class Settings(BaseSettings):
     DB_PASS: str
     DB_NAME: str
     DB_PORT: int
-
 
     @property
     def DB_URL(self):
@@ -26,11 +26,11 @@ class Settings(BaseSettings):
     REDIS_HOST: str
     REDIS_PORT: int
 
-
     @property
     def REDIS_URL(self):
         return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}"
 
     model_config = SettingsConfigDict(env_file=BASE_DIR / ".env", extra="ignore")
+
 
 settings = Settings()

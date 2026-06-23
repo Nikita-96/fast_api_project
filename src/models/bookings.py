@@ -5,6 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import ForeignKey
 from src.database import Base
 
+
 class BookingsOrm(Base):
     __tablename__ = "bookings"
 
@@ -21,6 +22,3 @@ class BookingsOrm(Base):
         if not days:
             return self.price
         return self.price * days
-
-
-

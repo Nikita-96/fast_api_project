@@ -2,11 +2,11 @@ from pydantic import BaseModel, ConfigDict
 from datetime import date
 
 
-
 class BookingsEdit(BaseModel):
     room_id: int
     date_from: date
     date_to: date
+
 
 class BookingsAdd(BookingsEdit):
     user_id: int
@@ -18,4 +18,3 @@ class Bookings(BookingsAdd):
     total_cost: int
 
     model_config = ConfigDict(from_attributes=True)
-

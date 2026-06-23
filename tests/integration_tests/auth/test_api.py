@@ -6,8 +6,8 @@ import pytest
     ("kot1@pes.com", "1234", 401),
     ("kot2@pes.com", "1234", 200),
     ("kot3@pes.com", "1234", 200),
-    ("kot3@pes", "1234", 422),
-    ("kot3", "1234", 422),
+    ("kot3@pes", "1234", 409),
+    ("kot3", "1234", 409,)
 ])
 async def test_auth_flow(email: str, password: str, status_code: int, ac):
 

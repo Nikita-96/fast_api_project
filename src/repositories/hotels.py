@@ -36,15 +36,9 @@ class HotelRepository(BaseRepository):
     #     return [self.schema.model_validate(row, from_attributes=True) for row in result.scalars().all()]
 
     async def get_filtered_by_time(
-            self,
-            date_from: date,
-            date_to: date,
-            location,
-            title,
-            limit,
-            offset
+        self, date_from: date, date_to: date, location, title, limit, offset
     ):
-        rooms_ids_free_hotels = rooms_ids_free(date_from=date_from,date_to=date_to)
+        rooms_ids_free_hotels = rooms_ids_free(date_from=date_from, date_to=date_to)
         hotels_ids = (
             select(RoomsOrm.hotel_id)
             .select_from(RoomsOrm)
@@ -59,5 +53,3 @@ class HotelRepository(BaseRepository):
         hotels = hotels.limit(limit).offset(offset)
         result = await self.session.execute(hotels)
         return [self.mapper.map_to_domain_entity(row) for row in result.scalars().all()]
-
-
